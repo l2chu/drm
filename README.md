@@ -9,7 +9,7 @@ Dr. Bhattacharyya
 ***Graduate Advisor***
 A. Gupta
 
-*** Team members:**
+***Team members***
 Colbi Appleby
 Tyler Price
 Lillian Chu
