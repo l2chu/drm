@@ -43,9 +43,9 @@
                 </div>
 
                 <div class="row g-3">
-                    <div class="col-md-7 col-lg-8">
-                        <h4 class="mb-3">Header</h4>
-                        <form class="needs-validation" novalidate>
+                    <form class="needs-validation" novalidate>
+                        <div class="col-md-7 col-lg-8">
+                            <h4 class="mb-3">Header</h4>
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label class="form-label" for="firstName">First name</label>
@@ -85,7 +85,7 @@
                                 <div class="col-md-4">
                                     <label class="form-label" for="state">State</label>
                                     <select class="form-select" id="state" required>
-                                        <option value="" selected="selected">Choose...</option>
+                                        <option selected="selected" value="">Choose...</option>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -139,7 +139,7 @@
                                         <option value="WY">Wyoming</option>
                                     </select>
                                     <div class="invalid-feedback">
-                                        Please provide a valid state.
+                                        State required.
                                     </div>
                                 </div>
 
@@ -147,11 +147,11 @@
                                     <label class="form-label" for="zip">Zip</label>
                                     <input class="form-control" id="zip" placeholder="" required type="text" />
                                     <div class="invalid-feedback">
-                                        Zip code required.
+                                        Please enter a valid Zip code
                                     </div>
                                 </div>
                             </div>
-                            <hr class="my-4">
+                            <hr class="my-4" />
                             <div class="form-check">
                                 <input class="form-check-input" id="same-address" type="checkbox" />
                                 <label class="form-check-label" for="same-address">Option 1</label>
@@ -161,7 +161,7 @@
                                 <input class="form-check-input" id="save-info" type="checkbox" />
                                 <label class="form-check-label" for="save-info">Option 2</label>
                             </div>
-                            <hr class="my-4">
+                            <hr class="my-4" />
                             <h4 class="mb-3">Header</h4>
 
                             <div class="row gy-3">
@@ -178,7 +178,7 @@
                                     <label for="dform">Dosage Form:</label><br />
                                     <textarea cols="70" id="dform" name="dform" placeholder="eg. Sterile, preservative-free liquid for infusion" required rows="4"></textarea>
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Please enter a valid Dosage Form.
                                     </div>
                                 </div>
                                 <br />
@@ -186,7 +186,7 @@
                                     <label for="dstrength">Dosage Strength:</label><br />
                                     <textarea cols="70" id="dstrength" name="dstrength" placeholder="eg. 1000mg per vial, 40mL at 25 mg/mL" required rows="4"></textarea>
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Please enter a valid Dosage Strength.
                                     </div>
                                 </div>
                                 <br />
@@ -194,7 +194,7 @@
                                     <label for="modeofa">Mode of Administration:</label><br />
                                     <textarea cols="70" id="modeofa" name="modeofa" placeholder="eg. Intravenous, diluted with isotonic saline, max. 1000 mg/h" required rows="4"></textarea>
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Please enter a valid Mode of Administration.
                                     </div>
                                 </div>
                                 <br />
@@ -202,7 +202,7 @@
                                     <label for="sda">Stability During Administration:</label><br />
                                     <textarea cols="70" id="sda" name="sda" placeholder="eg. Stable solution for 24 h at room temperature" required rows="4"></textarea>
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Please enter a valid Stability During Administration.
                                     </div>
                                 </div>
                                 <br />
@@ -210,7 +210,7 @@
                                     <label for="dpqr">Drug Product Quality Requirements:</label><br />
                                     <textarea cols="70" id="dpqr" name="dpqr" placeholder="eg. Meets pharmacopoeial requirements for parenteral dosage forms (PhEur, USP, JP)" required rows="4"></textarea>
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Please enter valid Product Quality Requirements.
                                     </div>
                                 </div>
                                 <br />
@@ -218,16 +218,16 @@
                                     <label for="degandimp">Degradations and Impurities:</label><br />
                                     <textarea cols="70" id="degandimp" name="degandimp" placeholder="eg. Acceptable patient risk due to process-related and product-related impurities in relation to the benefit" required rows="4"></textarea>
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Please enter valid Degradations and Impurities.
                                     </div>
                                 </div>
                                 <br />
                             </div>
-                        </form>
-                    </div>
-                    <hr class="my-4">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
-                    <button class="w-100 btn btn-primary btn-lg" type="reset">Reset</button>
+                        </div>
+                        <hr class="my-4" />
+                        <button class="w-100 btn btn-primary btn-lg btn-primary-spacing" type="submit">Submit</button>
+                        <button class="w-100 btn btn-primary btn-lg" type="reset">Reset</button>
+                    </form>
                 </div>
             </main>
 
