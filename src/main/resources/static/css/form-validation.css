@@ -1,0 +1,17 @@
+body {
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+div.row {
+  margin: 0 auto;
+  text-align: left;
+  width: 800px;
+}
+
+div.container {
+  max-width: 960px;
+}
+.btn-primary-spacing {
+  margin-right: 5px;
+  margin-bottom: 5px !important;
+}

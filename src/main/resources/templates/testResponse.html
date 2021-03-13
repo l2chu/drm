@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>TESTING DRM RESPONSE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Result</h1>
+    <p th:text="'First Name: ' + ${index.firstName}" />
+    <p th:text="'Last Name: ' + ${index.lastName}" />
+    <p th:text="'Email: ' + ${index.email}" />
+    <p th:text="'Country: ' + ${index.country}" />
+    <p th:text="'State: ' + ${index.state}" />
+    <p th:text="'Zip Code: ' + ${index.zip}" />
+    
+    <p th:text="'Mechanism(s) of Action: ' + ${index.mechAction}" />
+    <p th:text="'Dosage Form: ' + ${index.dosageForm}" />
+    <p th:text="'Dosage Strength: ' + ${index.dosageStr}" />
+    <p th:text="'Mode of Administration: ' + ${index.modeAdmin}" />
+    <p th:text="'Stability During Administration: ' + ${index.SDA}" />
+    <p th:text="'Drug Product Quality Requirements: ' + ${index.DPQR}" />
+    <p th:text="'Degradations and Impurities: ' + ${index.degAndImp}" />
+</body>
+</html>

@@ -9,5 +9,4 @@ public class DrmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DrmApplication.class, args);
 	}
-
 }
