@@ -121,9 +121,10 @@ public class DrmController {
 	public String indexSubmit(@ModelAttribute DRM drm, Model model) {
 		model.addAttribute("index", drm);
 		drmRepository.save(drm);
-		return "testResponse";
+		return "thankYouResponse";
 	}
 	
+	// testing if we did actually get from the database
 	@GetMapping(path="/all")
 	  public @ResponseBody Iterable<DRM> getAllDRMs() {
 	    // This returns a JSON or XML with the users
