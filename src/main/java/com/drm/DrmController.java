@@ -85,6 +85,8 @@ public class DrmController {
 		stateList.add(new State("WI", "Wisconsin"));
 		stateList.add(new State("WY", "Wyoming"));
 	}
+	
+
 	/*
 	 * private static final String template = "Hello, %s!"; private final AtomicLong
 	 * counter = new AtomicLong();
@@ -120,14 +122,14 @@ public class DrmController {
 	@PostMapping("/index")
 	public String indexSubmit(@ModelAttribute DRM drm, Model model) {
 		model.addAttribute("index", drm);
-		drmRepository.save(drm);
+		drmRepository.save(drm); 
 		return "thankYouResponse";
 	}
 	
 	// testing if we did actually get from the database
 	@GetMapping(path="/all")
 	  public @ResponseBody Iterable<DRM> getAllDRMs() {
-	    // This returns a JSON or XML with the users
+	    // This returns a JSON or XML with the entries
 	    return drmRepository.findAll();
 	  }
 }

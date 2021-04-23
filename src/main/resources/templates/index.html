@@ -115,64 +115,115 @@
                             <h4 class="mb-3">Header</h4>
 
                             <div class="row gy-3">
-                                <div class="col-13">
-                                    <label for="mechofa">Mechanism(s) of Action:</label>
-                                    <br />
-                                    <textarea th:field="*{mechAction}" cols="70" id="mechofa" name="mechofa"  placeholder="eg. B-cell depletion: antibody-dependent cellular cytotoxicity, direct cell death induction, etc." required rows="4" ></textarea>
+                            	<div class="form-group mx-sm-3 mb-2">
+                                    <label class="form-label" for="drugName">Name of Drug:</label>
+                                    <input class="form-control" id="drugName" placeholder="" required type="text" value="" />
                                     <div class="invalid-feedback">
-                                        Please enter a valid Mechanism of Action
+                                        Valid drug name is required.
                                     </div>
                                 </div>
-
+                                <h4 class="mb-3">Please select all relevant checkboxes below:</h4>
                                 <div class="col-13">
-                                    <label for="dform">Dosage Form:</label><br />
-                                    <textarea th:field="*{dosageForm}" cols="70" id="dform" name="dform" placeholder="eg. Sterile, preservative-free liquid for infusion" required rows="4"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter a valid Dosage Form.
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="col-13">
-                                    <label for="dstrength">Dosage Strength:</label><br />
-                                    <textarea th:field="*{dosageStr}" cols="70" id="dstrength" name="dstrength" placeholder="eg. 1000mg per vial, 40mL at 25 mg/mL" required rows="4"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter a valid Dosage Strength.
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="col-13">
-                                    <label for="modeofa">Mode of Administration:</label><br />
-                                    <textarea th:field="*{modeAdmin}" cols="70" id="modeofa" name="modeofa" placeholder="eg. Intravenous, diluted with isotonic saline, max. 1000 mg/h" required rows="4"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter a valid Mode of Administration.
-                                    </div>
+                                    <p class="col-form-label-lg">Mechanism(s) of Action:</p>
+                                    <div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="DCDI" th:field="${index.DCDI}">
+								  		<label class="form-check-label" for="DCDI">Direct Cell Death Induction</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="ADCC" th:field="${index.ADCC}">
+								  		<label class="form-check-label" for="ADCC">Antibody-dependent Cellular Cytotoxicity</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="ADCP" th:field="${index.ADCP}">
+								  		<label class="form-check-label" for="ADCP">Antibody-dependent Cellular Phagocytosis</label>
+									</div>
                                 </div>
                                 <br />
                                 <div class="col-13">
-                                    <label for="sda">Stability During Administration:</label><br />
-                                    <textarea th:field="*{SDA}" cols="70" id="sda" name="sda" placeholder="eg. Stable solution for 24 h at room temperature" required rows="4"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter a valid Stability During Administration.
-                                    </div>
+                                	<p class="col-form-label-lg">Dosage Form:</p>
+                                	<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="sterile" th:field="${index.sterile}">
+								  		<label class="form-check-label" for="sterile">Sterile</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="PFLI" th:field="${index.PFLI}">
+								  		<label class="form-check-label" for="PFLI">Preservative-free Liquid for Infusion</label>
+									</div>
                                 </div>
                                 <br />
                                 <div class="col-13">
-                                    <label for="dpqr">Drug Product Quality Requirements:</label><br />
-                                    <textarea th:field="*{DPQR}" cols="70" id="dpqr" name="dpqr" placeholder="eg. Meets pharmacopoeial requirements for parenteral dosage forms (PhEur, USP, JP)" required rows="4"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter valid Product Quality Requirements.
-                                    </div>
+                                    <p class="col-form-label-lg">Dosage Strength:</p>
+                                    <div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="mg_1000" th:field="${index.mg_1000}">
+								  		<label class="form-check-label" for="mg_1000">1000mg per vial</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="ml_40_at_25mg" th:field="${index.ml_40_at_25mg}">
+								  		<label class="form-check-label" for="ml_40_at_25mg">40mL at 25mg/mL</label>
+									</div>
                                 </div>
                                 <br />
                                 <div class="col-13">
-                                    <label for="degandimp">Degradations and Impurities:</label><br />
-                                    <textarea th:field="*{degAndImp}" cols="70" id="degandimp" name="degandimp" placeholder="eg. Acceptable patient risk due to process-related and product-related impurities in relation to the benefit" required rows="4"></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter valid Degradations and Impurities.
-                                    </div>
+                                    <p class="col-form-label-lg">Mode of Administration:</p>
+                                    <div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="INTRA" th:field="${index.INTRA}">
+								  		<label class="form-check-label" for="INTRA">Intravenous</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="DIS" th:field="${index.DIS}">
+								  		<label class="form-check-label" for="DIS">Diluted with Isotonic Saline</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="max_1000" th:field="${index.max_1000}">
+								  		<label class="form-check-label" for="max_1000">Max 1000 mg/h</label>
+									</div>
                                 </div>
                                 <br />
+                                <div class="col-13">
+                                    <p class="col-form-label-lg">Stability During Administration:</p>
+                                    <div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="stable_solution" th:field="${index.stable_solution}">
+								  		<label class="form-check-label" for="stable_solution">Stable Solution</label>
+									</div>
+                                </div>
+                                <br />
+                                <div class="col-13">
+                                    <p class="col-form-label-lg">Drug Product Quality Requirements:</p>
+                                    <div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="parental_dosage_form" th:field="${index.parental_dosage_form}">
+								  		<label class="form-check-label" for="parental_dosage_form">Parental Dosage Form</label>
+									</div>
+                                </div>
+                                <br />
+                                <div class="col-13">
+                                    <p class="col-form-label-lg">Degradations and Impurities:</p>
+                                    <div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="process_related" th:field="${index.process_related}">
+								  		<label class="form-check-label" for="process_related">Process Related</label>
+									</div>
+									<div class="form-check">
+								  		<input class="form-check-input" type="checkbox" value="" id="product_related" th:field="${index.product_related}">
+								  		<label class="form-check-label" for="product_related">Product Related</label>
+									</div>
+                                </div>
+                                <br />
+                                <label for="comments" class="col-form-label-lg">Additional Comments:</label>
+                                <br />
+                                <textarea cols="70" id="comments" name="comments" placeholder="" rows="4" th:field="*{comments}"></textarea>
+                                <br />
+                                <div class="form-group">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+										<label class="form-check-label" for="invalidCheck2">
+											Agree to terms and conditions
+										</label>
+										<div class="invalid-feedback">
+											You must agree before submitting.
+										</div>
+									</div>
+								</div>
                             </div>
+                            <br />
                         </div>
                         <hr class="my-4" />
                         <button class="w-100 btn btn-primary btn-lg btn-primary-spacing" type="submit">Submit</button>

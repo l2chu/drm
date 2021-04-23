@@ -7,10 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class DRM {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	public Integer getId() {
 		return id;
 	}
@@ -25,13 +26,44 @@ public class DRM {
 	private String country;
 	private String state;
 	private String zip;
-	private String mechAction;
-	private String dosageForm;
-	private String dosageStr;
-	private String modeAdmin;
-	private String SDA;
-	private String DPQR;
-	private String degAndImp;
+
+	// MOA
+	private boolean DCDI;
+	private boolean ADCC;
+	private boolean ADCP;
+
+	// DFORM
+	private boolean sterile;
+	private boolean PFLI;
+
+	// DSTRENGTH
+	private boolean mg_1000;
+	private boolean ml_40_at_25mg;
+
+	// MOADMIN
+	private boolean INTRA;
+	private boolean DIS;
+	private boolean max_1000;
+
+	// SDA
+	private boolean stable_solution;
+
+	// DPQR
+	private boolean parental_dosage_form;
+
+	// DEGIMP
+	private boolean process_related;
+	private boolean product_related;
+	
+	private String comments;
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -81,59 +113,116 @@ public class DRM {
 		this.zip = zip;
 	}
 
-	public String getMechAction() {
-		return mechAction;
+	public boolean isDCDI() {
+		return DCDI;
 	}
 
-	public void setMechAction(String mechAction) {
-		this.mechAction = mechAction;
+	public void setDCDI(boolean dCDI) {
+		DCDI = dCDI;
 	}
 
-	public String getDosageForm() {
-		return dosageForm;
+	public boolean isADCC() {
+		return ADCC;
 	}
 
-	public void setDosageForm(String dosageForm) {
-		this.dosageForm = dosageForm;
+	public void setADCC(boolean aDCC) {
+		ADCC = aDCC;
 	}
 
-	public String getDosageStr() {
-		return dosageStr;
+	public boolean isADCP() {
+		return ADCP;
 	}
 
-	public void setDosageStr(String dosageStr) {
-		this.dosageStr = dosageStr;
+	public void setADCP(boolean aDCP) {
+		ADCP = aDCP;
 	}
 
-	public String getModeAdmin() {
-		return modeAdmin;
+	public boolean isSterile() {
+		return sterile;
 	}
 
-	public void setModeAdmin(String modeAdmin) {
-		this.modeAdmin = modeAdmin;
+	public void setSterile(boolean sterile) {
+		this.sterile = sterile;
 	}
 
-	public String getSDA() {
-		return SDA;
+	public boolean isPFLI() {
+		return PFLI;
 	}
 
-	public void setSDA(String sDA) {
-		SDA = sDA;
+	public void setPFLI(boolean pFLI) {
+		PFLI = pFLI;
 	}
 
-	public String getDPQR() {
-		return DPQR;
+	public boolean isMg_1000() {
+		return mg_1000;
 	}
 
-	public void setDPQR(String dPQR) {
-		DPQR = dPQR;
+	public void setMg_1000(boolean mg_1000) {
+		this.mg_1000 = mg_1000;
 	}
 
-	public String getDegAndImp() {
-		return degAndImp;
+	public boolean isMl_40_at_25mg() {
+		return ml_40_at_25mg;
 	}
 
-	public void setDegAndImp(String degAndImp) {
-		this.degAndImp = degAndImp;
+	public void setMl_40_at_25mg(boolean ml_40_at_25mg) {
+		this.ml_40_at_25mg = ml_40_at_25mg;
 	}
+
+	public boolean isINTRA() {
+		return INTRA;
+	}
+
+	public void setINTRA(boolean iNTRA) {
+		INTRA = iNTRA;
+	}
+
+	public boolean isDIS() {
+		return DIS;
+	}
+
+	public void setDIS(boolean dIS) {
+		DIS = dIS;
+	}
+
+	public boolean isMax_1000() {
+		return max_1000;
+	}
+
+	public void setMax_1000(boolean max_1000) {
+		this.max_1000 = max_1000;
+	}
+
+	public boolean isStable_solution() {
+		return stable_solution;
+	}
+
+	public void setStable_solution(boolean stable_solution) {
+		this.stable_solution = stable_solution;
+	}
+
+	public boolean isParental_dosage_form() {
+		return parental_dosage_form;
+	}
+
+	public void setParental_dosage_form(boolean parental_dosage_form) {
+		this.parental_dosage_form = parental_dosage_form;
+	}
+
+	public boolean isProcess_related() {
+		return process_related;
+	}
+
+	public void setProcess_related(boolean process_related) {
+		this.process_related = process_related;
+	}
+
+	public boolean isProduct_related() {
+		return product_related;
+	}
+
+	public void setProduct_related(boolean product_related) {
+		this.product_related = product_related;
+	}
+
 }
