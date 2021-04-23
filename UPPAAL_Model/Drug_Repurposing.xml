@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>
+// All variables used in the main template and the scheduler
+
+broadcast chan MOA; // synchronisation event for mechanism of action
+broadcast chan DFORM; // synchronisation event for Dosage Form
+broadcast chan MOADMIN; // synchronisation event for Mechanism of Administration
+broadcast chan DSTRENGTH; // synchronisation event for Dosage Strength
+broadcast chan SDA; // synchronisation event for Stability During Administartion
+broadcast chan DPQR; // synchronisation event for Drug Product Quality Requirements
+broadcast chan DEGIMP;
+
+int number_of_moa;
+int number_of_dform;
+int number_of_moadmin;
+int number_of_dstrength;
+int number_of_sda;
+int number_of_dpqr;
+int number_of_degimp;
+
+int QTPP_Similarity; // variable to store the QTPP Similarity
+int Global_Count_True; // counter to keep a track of number of properties satisfied
+int Global_Count_Total = 16; // counter to store the total number of properties that can be satisfied
+int Similarity_Percentage; // variable to calulate and store the similarity between two diseases in percentage terms 
+
+// MOA
+int count_loc_moa = 0; // local counter for moa
+int count_moa = 0; // counter accessed by the schedular
+int DCDI_loc = 0;
+int ADCC_loc = 0;
+int ADCP_loc = 0;
+
+// DFORM
+int count_loc_dform = 0; // local counter for dform
+int count_dform = 0; // counter accessed by the schedular
+int Sterile_loc = 0;
+int PFLI_loc = 0;
+
+// MOADMIN
+int count_loc_moadmin = 0; // local counter for moadmin
+int count_moadmin = 0; // counter accessed by the schedular
+int INTRA_loc = 0;
+int DIS_loc = 0;
+int max_1000_loc = 0;
+
+//DSTRENGTH
+int count_loc_dstrength = 0; // local counter for dosage strength
+int count_dstrength = 0; // counter accessed by the scheduler
+int mg_1000_loc = 0;
+int ml_40_at_25mg_loc = 0;
+
+//DSTRENGTH
+int count_loc_sda = 0; // local counter for stability during admission
+int count_sda = 0; // counter accessed by the scheduler
+int stable_solution_loc = 0;
+
+//DPQR
+int count_loc_dpqr = 0; // local counter for stability during admission
+int count_dpqr = 0; // counter accessed by the scheduler
+int parental_dosage_form_loc = 0;
+
+//DEGIMP
+int count_loc_degimp = 0; // local counter for stability during admission
+int count_degimp = 0; // counter accessed by the scheduler
+int process_related_loc = 0; 
+int product_related_loc = 0;
+
+ </declaration>
+	<template>
+		<name x="5" y="5">QTPP_Model</name>
+		<declaration>// Place local declarations here.
+
+int loc_percentage;
+
+// function to calculate the percentage of similarity
+int calc_similarity_percentage()
+{
+    Global_Count_True = count_loc_moa + count_loc_dform + count_loc_moadmin;
+    loc_percentage = fint(((Global_Count_True*1.0)/Global_Count_Total)*100);
+    return loc_percentage;
+}
+</declaration>
+		<location id="id0" x="-25" y="85">
+			<name x="-50" y="51">Start</name>
+		</location>
+		<location id="id1" x="552" y="85">
+			<name x="542" y="51">End</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="26" y="59">(count_moa==2 &amp;&amp;count_dform==2&amp;&amp;count_moadmin==2)</label>
+			<label kind="assignment" x="85" y="93">QTPP_Similarity = calc_similarity_percentage()</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_MOA</name>
+		<parameter>int disease_id_moa, int MOA_n, bool DCDI, bool ADCC, bool ADCP</parameter>
+		<declaration>// flag function to store the value of MOA_n
+void call_flag_moa(int flag)
+{
+    if (flag == 1)
+        number_of_moa = number_of_moa + MOA_n;
+    else
+        number_of_moa = number_of_moa + MOA_n;
+    
+}
+</declaration>
+		<location id="id2" x="-875" y="-59">
+			<name x="-892" y="-93">Start</name>
+		</location>
+		<location id="id3" x="-620" y="-59">
+			<name x="-680" y="-42">MechanismOfAction</name>
+		</location>
+		<location id="id4" x="-280" y="-178">
+			<name x="-331" y="-212">F_MechanismOfAction</name>
+		</location>
+		<init ref="id2"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-867" y="42">count_loc_moa==number_of_moa</label>
+			<label kind="assignment" x="-816" y="76">count_moa++</label>
+			<nail x="-756" y="76"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<nail x="-289" y="-17"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-493" y="-93">ADCP==true</label>
+			<label kind="assignment" x="-569" y="-76">ADCP_loc++,count_loc_moa++, ADCP = false</label>
+			<nail x="-518" y="-68"/>
+			<nail x="-365" y="-76"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-552" y="-195">DCDI==true</label>
+			<label kind="assignment" x="-654" y="-178">DCDI_loc++, count_loc_moa++, DCDI = false</label>
+			<nail x="-620" y="-178"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-527" y="-136">ADCC==true</label>
+			<label kind="assignment" x="-629" y="-127">ADCC_loc++,count_loc_moa++, ADCC = false</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-782" y="-85">MOA?</label>
+			<label kind="assignment" x="-850" y="-59">call_flag_moa(disease_id_moa)</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_DFORM</name>
+		<parameter>int disease_id_dform, int DFORM_n, bool Sterile, bool PFLI</parameter>
+		<declaration>// flag function to store the value of DFORM_n
+
+void call_flag_dform(int flag)
+{
+    if (flag == 1)
+        number_of_dform = number_of_dform + DFORM_n;
+    else
+        number_of_dform = number_of_dform + DFORM_n;
+    
+}</declaration>
+		<location id="id5" x="-348" y="8">
+			<name x="-374" y="-25">Start</name>
+		</location>
+		<location id="id6" x="-59" y="8">
+			<name x="-102" y="-25">DosageForm</name>
+		</location>
+		<location id="id7" x="187" y="-76">
+			<name x="136" y="-110">F_DosageForm</name>
+		</location>
+		<init ref="id5"/>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<nail x="221" y="-76"/>
+			<nail x="221" y="76"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="guard" x="59" y="-8">PFLI==true</label>
+			<label kind="assignment" x="-8" y="8">PFLI_loc++,count_loc_dform++, PFLI = false</label>
+			<nail x="187" y="8"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="guard" x="25" y="-59">Sterile==true</label>
+			<label kind="assignment" x="-25" y="-42">Sterile_loc++,count_loc_dform++, Sterile = false</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-348" y="119">count_loc_dform==number_of_dform</label>
+			<label kind="assignment" x="-280" y="136">count_dform++</label>
+			<nail x="-221" y="127"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-229" y="-17">DFORM?</label>
+			<label kind="assignment" x="-323" y="8">call_flag_dform(disease_id_dform)</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_MOADMIN</name>
+		<parameter>int disease_id_moadmin, int MOADMIN_n, bool INTRA, bool DIS, bool max_1000</parameter>
+		<declaration>// flag function to store the value of MOADMIN_n
+
+void call_flag_moadmin(int flag)
+{
+    if (flag == 1)
+        number_of_moadmin = number_of_moadmin + MOADMIN_n;
+    else
+        number_of_moadmin = number_of_moadmin + MOADMIN_n;
+    
+}</declaration>
+		<location id="id8" x="-323" y="-17">
+			<name x="-348" y="-51">Start</name>
+		</location>
+		<location id="id9" x="17" y="-17">
+			<name x="-76" y="-51">ModeOfAdministration</name>
+		</location>
+		<location id="id10" x="272" y="-136">
+			<name x="187" y="-178">F_ModeOfAdministration</name>
+		</location>
+		<init ref="id8"/>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id9"/>
+			<nail x="331" y="-136"/>
+			<nail x="331" y="51"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id10"/>
+			<label kind="guard" x="110" y="-42">max_1000==true</label>
+			<label kind="assignment" x="76" y="-17">max_1000_loc++,count_loc_moadmin++, max_1000=false</label>
+			<nail x="272" y="-17"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id10"/>
+			<label kind="guard" x="93" y="-93">DIS==true</label>
+			<label kind="assignment" x="-25" y="-76">DIS_loc++,count_loc_moadmin++, DIS = false</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id10"/>
+			<label kind="guard" x="17" y="-161">INTRA==true</label>
+			<label kind="assignment" x="-127" y="-136">INTRA_loc++,count_loc_moadmin++, INTRA = false</label>
+			<nail x="17" y="-136"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id8"/>
+			<label kind="guard" x="-280" y="93">count_loc_moadmin==number_of_moadmin</label>
+			<label kind="assignment" x="-212" y="119">count_moadmin++</label>
+			<nail x="-144" y="119"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-204" y="-34">MOADMIN?</label>
+			<label kind="assignment" x="-297" y="-17">call_flag_moadmin(disease_id_moadmin)</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_DSTRENGTH</name>
+		<parameter>int disease_id_dstrength, int DSTRENGTH_n, bool mg_1000, bool ml_40_at_25mg</parameter>
+		<declaration>// flag function to store the value of DSTRENGTH_n
+
+void call_flag_dstrength(int flag)
+{
+    if (flag == 1)
+        number_of_dstrength = number_of_dstrength + DSTRENGTH_n;
+    else
+        number_of_dstrength = number_of_dstrength + DSTRENGTH_n;
+    
+}</declaration>
+		<location id="id11" x="-663" y="-17">
+			<name x="-688" y="-51">Start</name>
+		</location>
+		<location id="id12" x="-314" y="-17">
+			<name x="-374" y="0">DosageStrength</name>
+		</location>
+		<location id="id13" x="-25" y="-144">
+			<name x="-76" y="-178">F_DosageStrength</name>
+		</location>
+		<init ref="id11"/>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="guard" x="-646" y="110">count_loc_dstrength==number_of_dstrength</label>
+			<label kind="assignment" x="-569" y="136">count_dstrength++</label>
+			<nail x="-493" y="136"/>
+		</transition>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id12"/>
+			<nail x="-25" y="-17"/>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id13"/>
+			<label kind="guard" x="-255" y="-170">mg_1000 == true</label>
+			<label kind="assignment" x="-450" y="-144">mg_1000_loc++,count_loc_dstrength++, mg_1000 = false</label>
+			<nail x="-314" y="-144"/>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id13"/>
+			<label kind="guard" x="-246" y="-102">ml_40_at_25mg == true</label>
+			<label kind="assignment" x="-399" y="-85">ml_40_at_25mg_loc++,count_loc_dstrength++, ml_40_at_25mg = false</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-535" y="-42">DSTRENGTH?</label>
+			<label kind="assignment" x="-629" y="-17">call_flag_dstrength(disease_id_dstrength)</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_SDA</name>
+		<parameter>int disease_id_sda, int SDA_n, bool stable_solution</parameter>
+		<declaration>// flag function to store the value of SDA_n
+
+void call_flag_dstrength(int flag)
+{
+    if (flag == 1)
+        number_of_sda = number_of_sda + SDA_n;
+    else
+        number_of_sda = number_of_sda + SDA_n;
+    
+}</declaration>
+		<location id="id14" x="-722" y="-42">
+			<name x="-739" y="-76">Start</name>
+		</location>
+		<location id="id15" x="-374" y="-42">
+			<name x="-425" y="-17">StabilityDuringAdmission</name>
+		</location>
+		<location id="id16" x="-204" y="-195">
+			<name x="-280" y="-229">F_StabilityDuringAdmission</name>
+		</location>
+		<init ref="id14"/>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id14"/>
+			<label kind="guard" x="-697" y="93">count_loc_sda==number_of_sda</label>
+			<label kind="assignment" x="-646" y="119">count_sda++</label>
+			<nail x="-603" y="119"/>
+		</transition>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id15"/>
+			<nail x="-204" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id16"/>
+			<label kind="guard" x="-382" y="-153">stable_solution == true</label>
+			<label kind="assignment" x="-510" y="-136">stable_solution_loc++,count_loc_sda++, stable_solution = false</label>
+		</transition>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="-586" y="-59">SDA?</label>
+			<label kind="assignment" x="-680" y="-34">call_flag_dstrength(disease_id_sda)</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_DPQR</name>
+		<parameter>int disease_id_dpqr, int DPQR_n, bool parental_dosage_form</parameter>
+		<declaration>// flag function to store the value of DPQR_n
+
+void call_flag_dpqr(int flag)
+{
+    if (flag == 1)
+        number_of_dpqr = number_of_dpqr + DPQR_n;
+    else
+        number_of_dpqr = number_of_dpqr + DPQR_n;
+    
+}</declaration>
+		<location id="id17" x="-892" y="-25">
+			<name x="-909" y="-59">Start</name>
+		</location>
+		<location id="id18" x="-561" y="-25">
+			<name x="-637" y="-8">DrugProductQualityRequirements</name>
+		</location>
+		<location id="id19" x="-357" y="-221">
+			<name x="-442" y="-255">DrugProductQualityRequirements_F</name>
+		</location>
+		<init ref="id17"/>
+		<transition>
+			<source ref="id19"/>
+			<target ref="id18"/>
+			<nail x="-357" y="-25"/>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="guard" x="-578" y="-153">parental_dosage_form==true</label>
+			<label kind="assignment" x="-671" y="-127">parental_dosage_form_loc++,count_loc_dpqr++, parental_dosage_form = false</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id17"/>
+			<label kind="guard" x="-850" y="119">count_loc_dpqr==number_of_dpqr</label>
+			<label kind="assignment" x="-790" y="144">count_dpqr++</label>
+			<nail x="-739" y="144"/>
+		</transition>
+		<transition>
+			<source ref="id17"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="-756" y="-17">DPQR?</label>
+			<label kind="assignment" x="-816" y="-51">call_flag_dpqr(disease_id_dpqr)</label>
+		</transition>
+	</template>
+	<template>
+		<name>QTPP_DEGIMP</name>
+		<parameter>int disease_id_degimp, int DEGIMP_n, bool process_related, bool product_related</parameter>
+		<declaration>// flag function to store the value of DEGIMP_n
+
+void call_flag_degimp(int flag)
+{
+    if (flag == 1)
+        number_of_degimp = number_of_degimp + DEGIMP_n;
+    else
+        number_of_degimp = number_of_degimp + DEGIMP_n;
+    
+}</declaration>
+		<location id="id20" x="-714" y="17">
+			<name x="-731" y="-17">Start</name>
+		</location>
+		<location id="id21" x="-416" y="17">
+			<name x="-510" y="34">DegradantAndImpurities</name>
+		</location>
+		<location id="id22" x="-153" y="-136">
+			<name x="-212" y="-170">DegradantAndImpurities_F</name>
+		</location>
+		<init ref="id20"/>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id20"/>
+			<label kind="guard" x="-722" y="144">count_loc_degimp==number_of_degimp</label>
+			<label kind="assignment" x="-646" y="178">count_degimp++</label>
+			<nail x="-586" y="178"/>
+		</transition>
+		<transition>
+			<source ref="id22"/>
+			<target ref="id21"/>
+			<nail x="-153" y="17"/>
+		</transition>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id22"/>
+			<label kind="guard" x="-398" y="-170">process_related == true</label>
+			<label kind="assignment" x="-501" y="-127">process_related_loc++, count_loc_degimp++, process_related=false</label>
+			<nail x="-416" y="-136"/>
+		</transition>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id22"/>
+			<label kind="guard" x="-365" y="-85">product_related == true</label>
+			<label kind="assignment" x="-442" y="-68">product_related_loc++, count_loc_degimp++, product_related=false</label>
+		</transition>
+		<transition>
+			<source ref="id20"/>
+			<target ref="id21"/>
+			<label kind="synchronisation" x="-612" y="25">DEGIMP?</label>
+			<label kind="assignment" x="-688" y="-8">call_flag_degimp(disease_id_degimp)</label>
+		</transition>
+	</template>
+	<template>
+		<name>Scheduler</name>
+		<location id="id23" x="-323" y="-42">
+			<name x="-348" y="-76">Start</name>
+		</location>
+		<location id="id24" x="-68" y="-42">
+			<name x="-153" y="-76">MechanismOfAction_S</name>
+		</location>
+		<location id="id25" x="204" y="-42">
+			<name x="161" y="-76">DosageForm_S</name>
+		</location>
+		<location id="id26" x="204" y="136">
+			<name x="127" y="161">ModeOfAdministration_S</name>
+		</location>
+		<location id="id27" x="-68" y="136">
+			<name x="-136" y="153">DosageStrength_S</name>
+		</location>
+		<location id="id28" x="-306" y="136">
+			<name x="-391" y="170">StabilityDuringAdmission_S</name>
+		</location>
+		<location id="id29" x="-527" y="136">
+			<name x="-697" y="161">DrugProductQualityRequirements_S</name>
+		</location>
+		<location id="id30" x="-527" y="-42">
+			<name x="-603" y="-76">DegradantAndImpurities_S</name>
+		</location>
+		<init ref="id23"/>
+		<transition>
+			<source ref="id29"/>
+			<target ref="id30"/>
+			<label kind="guard" x="-578" y="17">count_dpqr == 2</label>
+			<label kind="synchronisation" x="-552" y="42">DEGIMP!</label>
+		</transition>
+		<transition>
+			<source ref="id28"/>
+			<target ref="id29"/>
+			<label kind="guard" x="-459" y="110">count_sda==2</label>
+			<label kind="synchronisation" x="-433" y="144">DPQR!</label>
+		</transition>
+		<transition>
+			<source ref="id27"/>
+			<target ref="id28"/>
+			<label kind="guard" x="-263" y="110">count_dstrength==2</label>
+			<label kind="synchronisation" x="-204" y="144">SDA!</label>
+		</transition>
+		<transition>
+			<source ref="id26"/>
+			<target ref="id27"/>
+			<label kind="guard" x="-8" y="110">count_moadmin==2</label>
+			<label kind="synchronisation" x="25" y="144">DSTRENGTH!</label>
+		</transition>
+		<transition>
+			<source ref="id25"/>
+			<target ref="id26"/>
+			<label kind="guard" x="136" y="17">count_dform==2</label>
+			<label kind="synchronisation" x="170" y="42">MOADMIN!</label>
+		</transition>
+		<transition>
+			<source ref="id24"/>
+			<target ref="id25"/>
+			<label kind="guard" x="25" y="-68">count_moa==2</label>
+			<label kind="synchronisation" x="59" y="-42">DFORM!</label>
+		</transition>
+		<transition>
+			<source ref="id23"/>
+			<target ref="id24"/>
+			<label kind="synchronisation" x="-221" y="-59">MOA!</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+QTPP = QTPP_Model();
+
+MOA_COVID = QTPP_MOA(1,2,true,false,true);
+MOA_Cancer = QTPP_MOA(2,2,true,false,true);
+
+DFORM_COVID = QTPP_DFORM(1,1,false,true);
+DFORM_Cancer = QTPP_DFORM(2,1,false,true);
+
+MOADMIN_COVID = QTPP_MOADMIN(1,1,false,false,true);
+MOADMIN_Cancer = QTPP_MOADMIN(2,1,false,false,true);
+
+DSTRENGTH_COVID = QTPP_DSTRENGTH(1,2,true,true);
+DSTRENGTH_Cancer = QTPP_DSTRENGTH(2,2,true,true);
+
+SDA_COVID = QTPP_SDA(1,1,true);
+SDA_Cancer = QTPP_SDA(2,1,true);
+
+DPQR_COVID = QTPP_DPQR(1,1,true);
+DPQR_Cancer = QTPP_DPQR(2,1,true);
+
+DEGIMP_COVID = QTPP_DEGIMP(1,1,true,false);
+DEGIMP_Cancer = QTPP_DEGIMP(2,1,true,false);
+
+Scheduler1 = Scheduler();
+
+// List one or more processes to be composed into a system.
+system QTPP, MOA_COVID, MOA_Cancer, DFORM_COVID, DFORM_Cancer, MOADMIN_COVID, MOADMIN_Cancer, DSTRENGTH_COVID, DSTRENGTH_Cancer, SDA_COVID, SDA_Cancer, DPQR_COVID, DPQR_Cancer, DEGIMP_COVID, DEGIMP_Cancer, Scheduler1;
+    </system>
+	<queries>
+		<query>
+			<formula>A&lt;&gt;  Scheduler1.DegradantAndImpurities_S</formula>
+			<comment>For all paths eventually we get to the final state of the scheduler</comment>
+		</query>
+		<query>
+			<formula>Scheduler1.MechanismOfAction_S --&gt; Scheduler1.DosageForm_S</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; count_moa == 2 &amp;&amp; COVID.DosageForm</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; count_moa == 2 &amp;&amp; count_dform == 2 &amp;&amp; count_moadmin == 2</formula>
+			<comment>All checks have been performed on a path</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; COVID.MechanismOfAction &amp;&amp; Cancer.DosageForm</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; count_dform == 2</formula>
+			<comment>Checked for dform?</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; PFLI_loc == 2</formula>
+			<comment>Do both diseases modeled have dosage form PFLI?</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Sterile_loc == 2</formula>
+			<comment>Do both diseases modeled have dosage form Sterile?</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; count_moa == 2</formula>
+			<comment>All diseases checked MOA</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; count_loc_moa == 4</formula>
+			<comment>Maximum number of matches on MOA between COVID and Cancer</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; ADCP_loc == 2</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; ADCC_loc == 1</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; DCDI_loc == 2</formula>
+			<comment>Is there a match between COVID and cancer on MOA DCDI</comment>
+		</query>
+	</queries>
+</nta>
