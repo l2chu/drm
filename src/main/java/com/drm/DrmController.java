@@ -111,7 +111,7 @@ public class DrmController {
 	 * 
 	 */
 
-	@GetMapping("/index")
+	@GetMapping("/")
 	public String indexForm(Model model) {
 		model.addAttribute("index", new DRM());
 		model.addAttribute("countryList", countryList);
@@ -119,7 +119,7 @@ public class DrmController {
 		return "index";
 	}
 
-	@PostMapping("/index")
+	@PostMapping("/")
 	public String indexSubmit(@ModelAttribute DRM drm, Model model) {
 		model.addAttribute("index", drm);
 		drmRepository.save(drm); 
